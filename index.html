@@ -19,7 +19,7 @@
         function trackEvent(params) {
             if (window.AndroidInterface) {
                 window.AndroidInterface.log("Button clicked");
-                window.AndroidInterface.trackEvent(JSON.stringify(params))
+                window.AndroidInterface.trackEvent(JSON.stringify(params));
             } else if (window.webkit
                 && window.webkit.messageHandlers
                 && window.webkit.messageHandlers.firebase) {
@@ -35,7 +35,7 @@
                 console.log("No native APIs found.");
             }
         }
-        
+
     </script>
 </body>
 
