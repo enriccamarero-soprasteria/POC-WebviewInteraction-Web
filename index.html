@@ -9,23 +9,39 @@
 </head>
 
 <body>
-    <p id="text"></p>
-    <input type="button" title="Click Me" onclick="onButtonClicked()" />
+    <input type="button" value="Click Me" onclick="onButtonClicked()" />
     <script type="text/javascript">
-
-        function onButtonClicked() {
-            trackEvent({ a: "A", b: "B", c: "C" })
+        const events = {
+            LOAD: 'load',
+            ACTION: 'action'
         }
 
-        function trackEvent(params) {
+        window.onload = () => {
+            alert("Tracking OnLoad event for" + window.location.href)
+            trackEvent({
+                event_type: events.LOAD,
+                screen_name: window.location.pathname,
+                timestamp: new Date()
+            })
+        }
+
+        let onButtonClicked = () => trackEventtrackEvent({
+            event_type: events.ACTION,
+            screen_name: window.location.pathname,
+            timestamp: new Date()
+        })
+
+        let trackEvent = params => {
             if (window.AndroidInterface) {
-                window.AndroidInterface.log("Button clicked");
+                window.AndroidInterface.log(`Tracking event:` + params.event_type);
                 window.AndroidInterface.trackEvent(JSON.stringify(params));
             } else {
-                document.getElementById("text").innerHTML = "Not found"
-                console.log("No native APIs found.");
+                alert("Cannot track event in browser.")
+                console.log("No native APIs found.")
             }
         }
+
+        let onEventTracked = params => alert('Event successfully tracked' + JSON.stringify(params))
 
     </script>
 </body>
